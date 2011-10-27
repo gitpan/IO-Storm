@@ -1,0 +1,14 @@
+Changes
+LICENSE
+MANIFEST
+META.json
+META.yml
+Makefile.PL
+README
+README.mkdn
+lib/IO/Storm.pm
+lib/IO/Storm/BasicBolt.pm
+lib/IO/Storm/Bolt.pm
+lib/IO/Storm/Tuple.pm
+t/release-pod-syntax.t
+t/release-synopsis.t

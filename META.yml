@@ -1,0 +1,25 @@
+---
+abstract: "Perl support for Twitter's Storm"
+author:
+  - 'Cory G Watson <gphat@cpan.org>'
+build_requires:
+  Test::More: 0
+configure_requires:
+  ExtUtils::MakeMaker: 6.30
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 4.300002, CPAN::Meta::Converter version 2.112150'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: IO-Storm
+requires:
+  IO::File: 0
+  IO::Handle: 0
+  JSON::XS: 0
+  Log::Log4perl: 0
+  Moose: 0
+resources:
+  homepage: https://github.com/gphat/io-storm
+  repository: https://github.com/gphat/io-storm.git
+version: 0.01
