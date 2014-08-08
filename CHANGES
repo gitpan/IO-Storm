@@ -1,0 +1,143 @@
+==================================================
+Changes from 2013-08-08 00:00:00 +0000 to present.
+==================================================
+
+-----------------------------------------
+version 0.06 at 2014-08-08 13:03:01 +0000
+-----------------------------------------
+
+  Change: 6391c1a8fec7be5cc5101df4e65cb2d6b6e23f2f
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-07-30 09:05:46 +0000
+
+    Bump version to 0.06 
+
+-----------------------------------------
+version 0.06 at 2014-07-30 13:02:12 +0000
+-----------------------------------------
+
+  Change: 18463c3d7c5c47e12731c7948b71acecf5cd539d
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-07-30 09:02:12 +0000
+
+    Fix bolt emit anchoring, and add corresponding test. 
+
+-----------------------------------------
+version 0.05 at 2014-07-29 03:50:42 +0000
+-----------------------------------------
+
+  Change: b7f16c35a0ef8f352f3cd197f4f458f081854cb7
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-07-28 23:50:42 +0000
+
+    Bump version in dist.ini 
+
+  Change: 65ec6fdb64f5f42afe0b1901e7f2111bb02a185f
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-07-28 23:48:31 +0000
+
+    Fix a couple crashes in Bolt.pm related to 'ro' instead of 'rw'.
+
+    Also made _setup_component more resilient to weird values for
+    $storm_conf. 
+
+  Change: 7194a7359dc6d82992353cc2b420a34a7b6c3920
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-07-28 22:33:49 +0000
+
+    Add a lot of little fixes from Streamparse fix/major branch. 
+
+-----------------------------------------
+version 0.04 at 2014-07-25 19:35:10 +0000
+-----------------------------------------
+
+  Change: 3fb68f1b2cbfe2d4f75afa0e776f5d813636aec9
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-07-25 15:35:10 +0000
+
+    Fix test for PID sending and remove int() conversion for tuple IDs. 
+
+  Change: de6861081539e231902a50845fa4e32645914e57
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-07-25 15:26:03 +0000
+
+    Ensure PID and tuple ID are sent as ints 
+
+-----------------------------------------
+version 0.03 at 2014-07-25 18:32:15 +0000
+-----------------------------------------
+
+  Change: ecb03456b2eea09a79d4cfeddfbde493c5dc6e34
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-07-25 14:32:15 +0000
+
+    More tweaks to dist.ini 
+
+  Change: e82802e0de707a1432eea16713d5ba302ab043c8
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-07-25 14:15:32 +0000
+
+    Make dist.ini more standard 
+
+  Change: b173c37b763c6d8599345b37186edef55fe3642d
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-07-25 11:03:11 +0000
+
+    Can now modify JSON parser used by Storm.pm. Unit tests now pass. 
+
+  Change: e03c7cc928b85abe3271cb86cb08d48c6c62c0cd
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-07-25 10:50:11 +0000
+
+    Update changelog 
+
+  Change: f72007d732ad19e8673b61d845e0ca4a82ec7c7e
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-07-25 10:48:24 +0000
+
+    README fixes 
+
+  Change: ec9f7885ba309a1701fd4f8295f059f4f801d144
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-07-25 10:44:24 +0000
+
+    More README tweaks 
+
+  Change: 8a86c590951125f06bf0d23b3744e67a66eeaca1
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-07-25 10:42:40 +0000
+
+    Update README and dist.ini 
+
+  Change: 2ee099c27a2465896ea3de40c69ef2bd8e364d19
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-07-25 10:04:07 +0000
+
+    Fix handling of optional hashref args to emit methods.
+
+    Also fixed issue where Tuple class did not have TO_JSON method.
+
+    Unit tests just need to be tweaked so that JSON is sorted by key,
+    because currently tests will randomly fail due to ordering issues. 
+
+  Change: 128eaffe0e543e2ecc14148a7602804a6b47063b
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-07-24 23:04:57 +0000
+
+    Documentation clean up and the start of fixing the unit tests. 
+
+  Change: 7f6967ae3dd7ff33138c6a22b11c07ecf77fbbb9
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-07-24 23:00:29 +0000
+
+    Remove methods that are no longer necessary from Storm.pm 
+
+  Change: 7f26797a3598ca2460f0091c8e8b85345a851d58
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-07-24 22:58:12 +0000
+
+    Ported Bolt/BasicBolt and Spout over from Python Streamparse. 
+
+===============================================
+Plus 1 release after 2013-08-08 00:00:00 +0000.
+===============================================

@@ -1,301 +1,317 @@
-package IO::Storm;
-{
-  $IO::Storm::VERSION = '0.01';
-}
-use Moose;
+# ABSTRACT: IO::Storm allows you to write Bolts and Spouts for Storm in Perl.
 
+package IO::Storm;
+$IO::Storm::VERSION = '0.06';
+# Imports
+use strict;
+use warnings;
+use v5.10;
 use IO::Handle qw(autoflush);
 use IO::File;
-use JSON::XS qw(decode_json encode_json);
-use Log::Log4perl;
+use Log::Log4perl qw(:easy);
+use JSON::XS;
+use Data::Dumper;
 use IO::Storm::Tuple;
 
-# ABSTRACT: Perl support for Twitter's Storm
+# Setup Moo for object-oriented niceties
+use Moo;
+use namespace::clean;
+
+has '_pending_commands' => (
+    is      => 'rw',
+    default => sub { [] },
+);
+
+has '_pending_taskids' => (
+    is      => 'rw',
+    default => sub { [] },
+);
+
+has '_stdin' => (
+    is      => 'rw',
+    default => sub {
+        my $io = IO::Handle->new;
+        $io->fdopen( fileno(STDIN), 'r' );
+    }
+);
+
+has 'max_lines' => (
+    is      => 'rw',
+    default => 100
+);
+
+has 'max_blank_msgs' => (
+    is      => 'rw',
+    default => 500
+);
+
+has '_json' => (
+    is      => 'rw',
+    default => sub { JSON::XS->new->allow_blessed->convert_blessed }
+);
+
+has '_topology_name' => (
+    is        => 'rw',
+    init_args => undef
+);
+
+has '_task_id' => (
+    is        => 'rw',
+    init_args => undef
+);
+
+has '_component_name' => (
+    is        => 'rw',
+    init_args => undef
+);
+
+has '_debug' => (
+    is        => 'rw',
+    init_args => undef
+);
+
+has '_storm_conf' => (
+    is        => 'rw',
+    init_args => undef
+);
+
+has '_context' => (
+    is        => 'rw',
+    init_args => undef
+);
 
 my $logger = Log::Log4perl->get_logger('storm');
 
 
-has '_anchor' => (
-    is => 'rw',
-    isa => 'IO::Storm::Tuple',
-    predicate => '_has_anchor'
-);
-
-has '_stdin' => (
-    is => 'rw',
-    default => sub {
-        my $io = IO::Handle->new;
-        $io->fdopen(fileno(STDIN), 'r');
-    }
-);
-
-sub read_string_message {
-    my ($self) = @_;
-
-    my @messages = ();
-    while(1) {
-        $logger->debug('reading');
-        my $line = $self->_stdin->getline;
-        chomp($line);
-        $logger->debug("got $line");
-        if($line eq 'end') {
-            last;
+sub _setup_component {
+    my ( $self, $storm_conf, $context ) = @_;
+    my $conf_is_hash = ref($storm_conf) eq ref {};
+    $self->_topology_name(
+        ( $conf_is_hash && exists( $storm_conf->{'topology.name'} ))
+        ? $storm_conf->{'topology.name'}
+        : ''
+    );
+    $self->_task_id( exists( $context->{taskid} ) ? $context->{taskid} : '' );
+    $self->_component_name('');
+    if ( exists( $context->{'task->component'} ) ) {
+        my $task_component = $context->{'task->component'};
+        if ( exists( $task_component->{ $self->_task_id } ) ) {
+            $self->_component_name( $task_component->{ $self->_task_id } );
         }
-        push(@messages, $line);
     }
-    return join("\n", @messages);
+    $self->_debug(
+        ($conf_is_hash && exists( $storm_conf->{'topology.debug'} ))
+        ? $storm_conf->{'topology.debug'}
+        : 0
+    );
+    $self->_storm_conf($storm_conf);
+    $self->_context($context);
 }
 
 
 sub read_message {
-    my ($self) = @_;
+    $logger->debug('start read_message');
+    my $self         = shift;
+    my $blank_lines  = 0;
+    my $message_size = 0;
+    my $line         = '';
 
-    return decode_json($self->read_string_message);
-}
-
-
-sub send_message_to_parent {
-    my ($self, $href) = @_;
-
-    $self->send_to_parent(encode_json($href));
-}
-
-
-sub send_to_parent {
-    my ($self, $s) = @_;
-
-    $logger->debug("sending $s");
-    print "$s\n";
-    $logger->debug('sending end');
-    print "end\n";
-}
-
-
-sub sync {
-    my ($self) = @_;
-    $logger->debug('sending sync');
-    print "sync\n";
-}
-
-
-sub send_pid {
-    my ($self, $hbdir) = @_;
-
-    my $pid = $$;
-    print "$pid\n";
-    $logger->debug("sent $pid");
-    
-    # XXX error handling
-    my $fh = IO::File->new;
-    $fh->open('> '.$hbdir.'/'.$pid);
-    $fh->close;
-    
-    $logger->debug("wrote pid to $hbdir/$pid");
-}
-
-
-sub emit_tuple {
-    my ($self, $tuple, $stream, $anchors, $direct_task) = @_;
-    
-    my %message = ( command => 'emit' );
-    if(defined($stream)) {
-        $message{stream} = $stream;
+    my @messages = ();
+    while (1) {
+        $line = $self->_stdin->getline;
+        if ( defined($line) ) {
+            $logger->debug("read_message: line=$line");
+        }
+        else {
+            $logger->error( "Received EOF while trying to read stdin from "
+                    . "Storm, pipe appears to be broken, exiting." );
+            exit(1);
+        }
+        if ( $line eq "end\n" ) {
+            last;
+        }
+        elsif ( $line eq '' ) {
+            $logger->error( "Received EOF while trying to read stdin from "
+                    . "Storm, pipe appears to be broken, exiting." );
+            exit(1);
+        }
+        elsif ( $line eq "\n" ) {
+            $blank_lines++;
+            if ( $blank_lines % 1000 == 0 ) {
+                $logger->warn( "While trying to read a command or pending "
+                        . "task ID, Storm has instead sent $blank_lines "
+                        . "'\\n' messages." );
+                next;
+            }
+        }
+        chomp($line);
+        push( @messages, $line );
     }
-    if($self->_has_anchor) {
-        # The python implementation maps this, but just works with a single
-        # anchor.  Perhaps it was there for some other feature?
-        $message{anchors} = [ $self->_anchor->id ];
+
+    return $self->_json->decode( join( "\n", @messages ) );
+}
+
+sub read_task_ids {
+    my $self = shift;
+
+    if ( scalar( @{ $self->_pending_taskids } ) ) {
+        return shift( $self->_pending_taskids );
     }
-    if(defined($direct_task)) {
-        $message{task} = $direct_task;
+    else {
+        my $msg = $self->read_message();
+        while ( ref($msg) ne 'ARRAY' ) {
+            push( $self->_pending_commands, $msg );
+            $msg = $self->read_message();
+        }
+
+        return $msg;
     }
-    $message{tuple} = $tuple;
-    $self->send_message_to_parent(\%message);
 }
 
+sub read_command {
+    my $self = shift;
 
-sub emit {
-    my ($self, $tuple, $stream, $anchors) = @_;
-    
-    $anchors = [];
-    $self->emit_tuple($tuple, $stream, $anchors);
-    return $self->read_message;
-}
-
-
-sub emit_direct {
-    my ($self, $task, $tuple, $stream, $anchors) = @_;
-
-    emit_tuple($tuple, $stream, $anchors, $task);
-}
-
-
-sub ack {
-    my ($self, $tuple) = @_;
-    
-    $self->send_message_to_parent({ command => 'ack', id => $tuple->id })
-}
-
-
-sub fail {
-    my ($self, $tuple) = @_;
-    
-    $self->send_message_to_parent({ command => 'fail', id => $tuple->id })
-}
-
-
-sub log {
-    my ($self, $message) = @_;
-    
-    $self->send_message_to_parent({ command => 'log', msg => $message })
-}
-
-
-sub read_env {
-    my ($self) = @_;
-    $logger->debug('read_env');
-    my $conf = $self->read_message;
-    my $context = $self->read_message;
-    
-    return [ $conf, $context ];
+    if ( @{ $self->_pending_commands } ) {
+        return shift( $self->_pending_commands );
+    }
+    else {
+        my $msg = $self->read_message();
+        while ( ref($msg) eq 'ARRAY' ) {
+            push( $self->_pending_taskids, $msg );
+            $msg = $self->read_message();
+        }
+        return $msg;
+    }
 }
 
 
 sub read_tuple {
-    my ($self) = @_;
+    my $self = shift;
+    $logger->debug('read_tuple');
 
-    my $tupmap = $self->read_message;
+    my $tupmap = $self->read_command();
 
     return IO::Storm::Tuple->new(
-        id      => $tupmap->{id},
+        id        => $tupmap->{id},
         component => $tupmap->{comp},
-        stream  => $tupmap->{stream},
-        task    => $tupmap->{task},
-        values  => $tupmap->{tuple}
+        stream    => $tupmap->{stream},
+        task      => $tupmap->{task},
+        values    => $tupmap->{tuple}
     );
 }
 
 
-sub init_bolt {
-    my ($self) = @_;
-    
+sub read_handshake {
+    my $self = shift;
+
+    # TODO: Figure out how to redirect stdout to ensure that print
+    # statements/functions won't crash the Storm Java worker
+
     autoflush STDOUT 1;
-    
-    $logger->debug('init_bolt');
-    my $hbdir = $self->read_string_message;
-    $self->send_pid($hbdir);
-    return $self->read_env;
+    autoflush STDERR 1;
+
+    my $msg = $self->read_message();
+    $logger->debug(
+        sub { 'Received initial handshake from Storm: ' . Dumper($msg) } );
+
+    # Write a blank PID file out to the pidDir
+    my $pid      = $$;
+    my $pid_dir  = $msg->{pidDir};
+    my $filename = $pid_dir . '/' . $pid;
+    open my $fh, '>', $filename
+        or die "Cant't write to '$filename': $!\n";
+    $fh->close;
+    $logger->debug("Sending process ID $pid to Storm");
+    $self->send_message( { pid => int($pid) } );
+
+    return [ $msg->{conf}, $msg->{context} ];
+}
+
+
+sub send_message {
+    my ( $self, $msg ) = @_;
+    say $self->_json->encode($msg);
+    say "end";
+}
+
+
+sub sync {
+    my $self = shift;
+
+    $self->send_message( { command => 'sync' } );
+}
+
+
+sub log {
+    my $self    = shift;
+    my $message = shift;
+
+    $self->send_message( { command => 'log', msg => $message } );
 }
 
 1;
 
 __END__
+
 =pod
 
 =head1 NAME
 
-IO::Storm - Perl support for Twitter's Storm
+IO::Storm - IO::Storm allows you to write Bolts and Spouts for Storm in Perl.
 
 =head1 VERSION
 
-version 0.01
-
-=head1 SYNOPSIS
-
-    package SplitSentenceBolt;
-    use Moose;
-
-    extends 'Storm::BasicBolt';
-
-    sub process {
-        my ($self, $tuple) = @_;
-
-        my @words = split(' ', $tuple->values->[0]);
-        foreach my $word (@words) {
-
-            $self->emit([ $word ]);
-        }
-    }
-
-    SplitSentenceBolt->new->run;
-
-=head1 DESCRIPTION
-
-IO::Storm allows you to leverage Storm's multilang support to write Bolts
-(and someday, more) in Perl.
+version 0.06
 
 =head1 METHODS
 
-=head2 read_string_message
+=head2 _setup_component
 
-Read a message from the ShellBolt.  Reads until it finds a "end" line.
+Add helpful instance variables to component after initial handshake with Storm.
 
 =head2 read_message
 
-Read a message from the ShellBolt and decode it from JSON.
-
-=head2 send_message_to_parent
-
-Sent a message to the ShellBolt, encoding it as JSON.
-
-=head2 send_to_parent
-
-Send a message to the ShellBolt.
-
-=head2 sync
-
-Send a sync.
-
-=head2 send_pid
-
-Send this processes PID.
-
-=head2 emit_tuple
-
-Send a tuple to the ShellBolt.
-
-=head2 emit
-
-Emit a tuple to the the ShellBolt and return the response.
-
-=head2 emit_direct
-
-Emit a tuple to the Shell bolt, but do not get a response.
-
-=head2 ack
-
-Acknowledge a tuple.
-
-=head2 fail
-
-Fail a tuple.
-
-=head2 log
-
-Send a log command to the ShellBolt
-
-=head2 read_env
-
-Read the configuration and context from the ShellBolt.
+Read a message from the ShellBolt.  Reads until it finds a "end" line.
 
 =head2 read_tuple
 
-Turn the incoming Tuple structure into an L<IO::Storm::Tuple>.
+Turn the incoming Tuple structure into an <IO::Storm::Tuple>.
 
-=head2 init_bolt
+=head2 read_handshake
 
-Initialize this bolt.
+Read and process an initial handshake message from Storm
 
-=head1 AUTHOR
+=head2 send_message
+
+Send a message to Storm, encoding it as JSON.
+
+=head2 sync
+
+Send a sync command to Storm.
+
+=head2 log
+
+Send a log command to Storm
+
+=head1 AUTHORS
+
+=over 4
+
+=item *
 
 Cory G Watson <gphat@cpan.org>
 
+=item *
+
+Dan Blanchard <dblanchard@ets.org>
+
+=back
+
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2011 by Infinity Interactive, Inc.
+This software is copyright (c) 2014 by Infinity Interactive, Inc.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
