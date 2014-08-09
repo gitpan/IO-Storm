@@ -39,6 +39,14 @@ IO::Storm::Tuple - Storm's primitive data type passed around via streams.
 
 =head1 VERSION
 
+version 0.07
+
+=head1 NAME
+
+IO::Storm::Tuple - Storm's primitive data type passed around via streams.
+
+=head1 VERSION
+
 version 0.06
 
 =head1 AUTHORS
@@ -52,6 +60,27 @@ Cory G Watson <gphat@cpan.org>
 =item *
 
 Dan Blanchard <dblanchard@ets.org>
+
+=back
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2014 by Infinity Interactive, Inc.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=head1 AUTHORS
+
+=over 4
+
+=item *
+
+Dan Blanchard <dblanchard@ets.org>
+
+=item *
+
+Cory G Watson <gphat@cpan.org>
 
 =back
 

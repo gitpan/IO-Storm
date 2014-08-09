@@ -1,8 +1,8 @@
 ---
 abstract: 'IO::Storm allows you to write Bolts and Spouts for Storm in Perl.'
 author:
-  - 'Cory G Watson <gphat@cpan.org>'
   - 'Dan Blanchard <dblanchard@ets.org>'
+  - 'Cory G Watson <gphat@cpan.org>'
 build_requires: {}
 configure_requires:
   ExtUtils::MakeMaker: '6.30'
@@ -21,4 +21,5 @@ requires:
   Test::More: '0'
   Test::Output: '0'
   Try::Tiny: '0'
-version: '0.06'
+  namespace::clean: '0'
+version: '0.07'

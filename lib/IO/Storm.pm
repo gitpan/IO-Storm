@@ -1,7 +1,7 @@
 # ABSTRACT: IO::Storm allows you to write Bolts and Spouts for Storm in Perl.
 
 package IO::Storm;
-$IO::Storm::VERSION = '0.06';
+
 # Imports
 use strict;
 use warnings;
@@ -261,7 +261,7 @@ IO::Storm - IO::Storm allows you to write Bolts and Spouts for Storm in Perl.
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 METHODS
 
@@ -299,11 +299,11 @@ Send a log command to Storm
 
 =item *
 
-Cory G Watson <gphat@cpan.org>
+Dan Blanchard <dblanchard@ets.org>
 
 =item *
 
-Dan Blanchard <dblanchard@ets.org>
+Cory G Watson <gphat@cpan.org>
 
 =back
 

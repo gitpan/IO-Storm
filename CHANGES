@@ -1,10 +1,28 @@
 ==================================================
-Changes from 2013-08-08 00:00:00 +0000 to present.
+Changes from 2013-08-09 00:00:00 +0000 to present.
 ==================================================
 
 -----------------------------------------
-version 0.06 at 2014-08-08 13:03:01 +0000
+version 0.07 at 2014-08-09 03:10:09 +0000
 -----------------------------------------
+
+  Change: 5d83b0fb597139e4768efbc6d12e766bd932948a
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-08-08 23:09:45 +0000
+
+    Tweak a bunch of Dist::Zilla settings. 
+
+  Change: ebc79f18c1ec263b59b2d3910fbedbd23d884c6e
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-08-08 09:16:51 +0000
+
+    Update version in README.md 
+
+  Change: d77282551aa69aed834baa9fee78ed59776d90f4
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-08-08 09:14:53 +0000
+
+    Remove Git::Check from dist.ini, because it confused dzil release 
 
   Change: 6391c1a8fec7be5cc5101df4e65cb2d6b6e23f2f
   Author: Daniel Blanchard <dblanchard@ets.org>
@@ -139,5 +157,5 @@ version 0.03 at 2014-07-25 18:32:15 +0000
     Ported Bolt/BasicBolt and Spout over from Python Streamparse. 
 
 ===============================================
-Plus 1 release after 2013-08-08 00:00:00 +0000.
+Plus 1 release after 2013-08-09 00:00:00 +0000.
 ===============================================

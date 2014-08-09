@@ -11,7 +11,7 @@ use ExtUtils::MakeMaker 6.30;
 
 my %WriteMakefileArgs = (
   "ABSTRACT" => "IO::Storm allows you to write Bolts and Spouts for Storm in Perl.",
-  "AUTHOR" => "Cory G Watson <gphat\@cpan.org>, Dan Blanchard <dblanchard\@ets.org>",
+  "AUTHOR" => "Dan Blanchard <dblanchard\@ets.org>, Cory G Watson <gphat\@cpan.org>",
   "BUILD_REQUIRES" => {},
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => "6.30"
@@ -27,10 +27,11 @@ my %WriteMakefileArgs = (
     "Test::MockObject" => 0,
     "Test::More" => 0,
     "Test::Output" => 0,
-    "Try::Tiny" => 0
+    "Try::Tiny" => 0,
+    "namespace::clean" => 0
   },
   "TEST_REQUIRES" => {},
-  "VERSION" => "0.06",
+  "VERSION" => "0.07",
   "test" => {
     "TESTS" => "t/IO/*.t t/IO/Storm/*.t"
   }
@@ -44,7 +45,8 @@ my %FallbackPrereqs = (
   "Test::MockObject" => 0,
   "Test::More" => 0,
   "Test::Output" => 0,
-  "Try::Tiny" => 0
+  "Try::Tiny" => 0,
+  "namespace::clean" => 0
 );
 
 
