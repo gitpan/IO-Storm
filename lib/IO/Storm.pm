@@ -261,7 +261,7 @@ IO::Storm - IO::Storm allows you to write Bolts and Spouts for Storm in Perl.
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 METHODS
 
