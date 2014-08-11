@@ -30,7 +30,7 @@
             "Moo" : "0",
             "Try::Tiny" : "0",
             "namespace::clean" : "0",
-            "perl" : "5.010",
+            "perl" : "5.014",
             "strict" : "0",
             "warnings" : "0"
          }
@@ -55,6 +55,6 @@
          "web" : "https://github.com/dan-blanchard/io-storm"
       }
    },
-   "version" : "0.10"
+   "version" : "0.11"
 }
 

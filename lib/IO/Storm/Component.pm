@@ -1,7 +1,7 @@
 # ABSTRACT: The base class for Bolts and Spouts.
 
 package IO::Storm::Component;
-$IO::Storm::Component::VERSION = '0.10';
+$IO::Storm::Component::VERSION = '0.11';
 # Imports
 use strict;
 use warnings;
@@ -261,7 +261,7 @@ IO::Storm::Component - The base class for Bolts and Spouts.
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 METHODS
 
