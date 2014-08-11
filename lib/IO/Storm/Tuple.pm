@@ -1,7 +1,7 @@
 # ABSTRACT: Storm's primitive data type passed around via streams.
 
 package IO::Storm::Tuple;
-$IO::Storm::Tuple::VERSION = '0.09';
+$IO::Storm::Tuple::VERSION = '0.10';
 # Setup Moo for object-oriented niceties
 use Moo;
 use namespace::clean;
@@ -39,7 +39,7 @@ IO::Storm::Tuple - Storm's primitive data type passed around via streams.
 
 =head1 VERSION
 
-version 0.09
+version 0.10
 
 =head1 NAME
 
@@ -86,7 +86,7 @@ Cory G Watson <gphat@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2014 by Infinity Interactive, Inc.
+This software is copyright (c) 2014 by Educational Testing Service.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

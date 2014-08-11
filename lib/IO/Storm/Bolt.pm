@@ -1,7 +1,7 @@
 # ABSTRACT: The base class for all IO::Storm Bolts.
 
 package IO::Storm::Bolt;
-$IO::Storm::Bolt::VERSION = '0.09';
+$IO::Storm::Bolt::VERSION = '0.10';
 # Imports
 use strict;
 use warnings;
@@ -12,7 +12,7 @@ use Try::Tiny;
 use Moo;
 use namespace::clean;
 
-extends 'IO::Storm';
+extends 'IO::Storm::Component';
 
 # A boolean indicating whether or not the bolt should automatically
 # anchor emits to the incoming tuple ID. Tuple anchoring is how Storm
@@ -180,7 +180,7 @@ IO::Storm::Bolt - The base class for all IO::Storm Bolts.
 
 =head1 VERSION
 
-version 0.09
+version 0.10
 
 =head1 NAME
 
@@ -274,7 +274,7 @@ Cory G Watson <gphat@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2014 by Infinity Interactive, Inc.
+This software is copyright (c) 2014 by Educational Testing Service.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

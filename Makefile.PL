@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-
+use 5.010;
 
 use ExtUtils::MakeMaker 6.30;
 
@@ -21,24 +21,33 @@ my %WriteMakefileArgs = (
   "LICENSE" => "perl",
   "NAME" => "IO::Storm",
   "PREREQ_PM" => {
+    "Data::Dumper" => 0,
+    "IO::File" => 0,
+    "IO::Handle" => 0,
     "JSON::XS" => 0,
     "Log::Log4perl" => 0,
     "Moo" => 0,
+    "Try::Tiny" => 0,
+    "namespace::clean" => 0,
+    "strict" => 0,
+    "warnings" => 0
+  },
+  "TEST_REQUIRES" => {
     "Test::MockObject" => 0,
     "Test::More" => 0,
-    "Test::Output" => 0,
-    "Try::Tiny" => 0,
-    "namespace::clean" => 0
+    "Test::Output" => 0
   },
-  "TEST_REQUIRES" => {},
-  "VERSION" => "0.09",
+  "VERSION" => "0.10",
   "test" => {
-    "TESTS" => "t/IO/*.t t/IO/Storm/*.t"
+    "TESTS" => "t/IO/Storm/*.t"
   }
 );
 
 
 my %FallbackPrereqs = (
+  "Data::Dumper" => 0,
+  "IO::File" => 0,
+  "IO::Handle" => 0,
   "JSON::XS" => 0,
   "Log::Log4perl" => 0,
   "Moo" => 0,
@@ -46,7 +55,9 @@ my %FallbackPrereqs = (
   "Test::More" => 0,
   "Test::Output" => 0,
   "Try::Tiny" => 0,
-  "namespace::clean" => 0
+  "namespace::clean" => 0,
+  "strict" => 0,
+  "warnings" => 0
 );
 
 
