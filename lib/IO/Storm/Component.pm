@@ -1,7 +1,7 @@
 # ABSTRACT: The base class for Bolts and Spouts.
 
 package IO::Storm::Component;
-$IO::Storm::Component::VERSION = '0.11';
+$IO::Storm::Component::VERSION = '0.12';
 # Imports
 use strict;
 use warnings;
@@ -87,7 +87,7 @@ sub _setup_component {
     my ( $self, $storm_conf, $context ) = @_;
     my $conf_is_hash = ref($storm_conf) eq ref {};
     $self->_topology_name(
-        ( $conf_is_hash && exists( $storm_conf->{'topology.name'} ))
+        ( $conf_is_hash && exists( $storm_conf->{'topology.name'} ) )
         ? $storm_conf->{'topology.name'}
         : ''
     );
@@ -100,7 +100,7 @@ sub _setup_component {
         }
     }
     $self->_debug(
-        ($conf_is_hash && exists( $storm_conf->{'topology.debug'} ))
+        ( $conf_is_hash && exists( $storm_conf->{'topology.debug'} ) )
         ? $storm_conf->{'topology.debug'}
         : 0
     );
@@ -155,7 +155,7 @@ sub read_task_ids {
     my $self = shift;
 
     if ( scalar( @{ $self->_pending_taskids } ) ) {
-        return shift( $self->_pending_taskids );
+        return shift( @{ $self->_pending_taskids } );
     }
     else {
         my $msg = $self->read_message();
@@ -172,7 +172,7 @@ sub read_command {
     my $self = shift;
 
     if ( @{ $self->_pending_commands } ) {
-        return shift( $self->_pending_commands );
+        return shift( @{ $self->_pending_commands } );
     }
     else {
         my $msg = $self->read_message();
@@ -237,15 +237,12 @@ sub send_message {
 
 sub sync {
     my $self = shift;
-
     $self->send_message( { command => 'sync' } );
 }
 
 
 sub log {
-    my $self    = shift;
-    my $message = shift;
-
+    my ( $self, $message ) = @_;
     $self->send_message( { command => 'log', msg => $message } );
 }
 
@@ -261,7 +258,7 @@ IO::Storm::Component - The base class for Bolts and Spouts.
 
 =head1 VERSION
 
-version 0.11
+version 0.12
 
 =head1 METHODS
 

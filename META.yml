@@ -25,11 +25,11 @@ requires:
   Moo: '0'
   Try::Tiny: '0'
   namespace::clean: '0'
-  perl: '5.014'
+  perl: '5.010'
   strict: '0'
   warnings: '0'
 resources:
   bugtracker: https://github.com/dan-blanchard/io-storm/issues
   homepage: https://github.com/dan-blanchard/io-storm
   repository: https://github.com/dan-blanchard/io-storm.git
-version: '0.11'
+version: '0.12'

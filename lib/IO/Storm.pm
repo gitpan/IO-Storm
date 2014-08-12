@@ -1,10 +1,10 @@
-use v5.14;
+use v5.10;
 use strict;
 use warnings;
 
 package IO::Storm;
 # ABSTRACT: IO::Storm allows you to write Bolts and Spouts for Storm in Perl.
-$IO::Storm::VERSION = '0.11';
+$IO::Storm::VERSION = '0.12';
 1;
 
 __END__
@@ -17,7 +17,7 @@ IO::Storm - IO::Storm allows you to write Bolts and Spouts for Storm in Perl.
 
 =head1 VERSION
 
-version 0.11
+version 0.12
 
 =head1 SYNOPSIS
 
