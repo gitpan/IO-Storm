@@ -4,7 +4,7 @@ use warnings;
 
 package IO::Storm;
 # ABSTRACT: IO::Storm allows you to write Bolts and Spouts for Storm in Perl.
-$IO::Storm::VERSION = '0.12';
+$IO::Storm::VERSION = '0.13';
 1;
 
 __END__
@@ -17,7 +17,7 @@ IO::Storm - IO::Storm allows you to write Bolts and Spouts for Storm in Perl.
 
 =head1 VERSION
 
-version 0.12
+version 0.13
 
 =head1 SYNOPSIS
 
@@ -114,8 +114,8 @@ C<next_tuple> method.
                      "an apple a day keeps the doctor away",];
     my $num_sentences = scalar(@$sentences);
 
-    sub nextI<tuple {
-        my ($self) = @>;
+    sub next_tuple {
+        my ($self) = @_;
 
         $self->emit( [ $sentences->[ rand($num_sentences) ] ] );
 

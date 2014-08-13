@@ -1,7 +1,7 @@
 # ABSTRACT: The base class for Bolts and Spouts.
 
 package IO::Storm::Component;
-$IO::Storm::Component::VERSION = '0.12';
+$IO::Storm::Component::VERSION = '0.13';
 # Imports
 use strict;
 use warnings;
@@ -160,7 +160,7 @@ sub read_task_ids {
     else {
         my $msg = $self->read_message();
         while ( ref($msg) ne 'ARRAY' ) {
-            push( $self->_pending_commands, $msg );
+            push( @{$self->_pending_commands}, $msg );
             $msg = $self->read_message();
         }
 
@@ -177,7 +177,7 @@ sub read_command {
     else {
         my $msg = $self->read_message();
         while ( ref($msg) eq 'ARRAY' ) {
-            push( $self->_pending_taskids, $msg );
+            push( @{$self->_pending_taskids}, $msg );
             $msg = $self->read_message();
         }
         return $msg;
@@ -258,7 +258,7 @@ IO::Storm::Component - The base class for Bolts and Spouts.
 
 =head1 VERSION
 
-version 0.12
+version 0.13
 
 =head1 METHODS
 

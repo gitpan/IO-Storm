@@ -1,9 +1,32 @@
 ==================================================
-Changes from 2013-08-12 00:00:00 +0000 to present.
+Changes from 2013-08-13 00:00:00 +0000 to present.
 ==================================================
 
 -----------------------------------------
-version 0.12 at 2014-08-12 14:41:50 +0000
+version 0.13 at 2014-08-13 02:23:37 +0000
+-----------------------------------------
+
+  Change: c5964b0ba703ed5c0a6f1e9909b2ade2b03884d3
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-08-12 22:23:24 +0000
+
+    Update README 
+
+  Change: ad60c74e7237c36dddd2b43c1d37c03a399d449a
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-08-12 22:22:47 +0000
+
+    Fix yet another issue caused by operations on array refs being marked
+    experimental in 5.20 
+
+  Change: 823147757180927f18f607ce463cc6210d4788e8
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-08-12 10:46:53 +0000
+
+    Fix a typo in POD for Storm.pm. 
+
+-----------------------------------------
+version 0.12 at 2014-08-12 14:41:38 +0000
 -----------------------------------------
 
   Change: 1c5150f46c5abd0a4f0325165d3d611c6f3b2484
@@ -222,5 +245,5 @@ version 0.03 at 2014-07-25 18:32:15 +0000
     Ported Bolt/BasicBolt and Spout over from Python Streamparse. 
 
 ===============================================
-Plus 1 release after 2013-08-12 00:00:00 +0000.
+Plus 1 release after 2013-08-13 00:00:00 +0000.
 ===============================================

@@ -1,7 +1,7 @@
 # ABSTRACT: Storm's primitive data type passed around via streams.
 
 package IO::Storm::Tuple;
-$IO::Storm::Tuple::VERSION = '0.12';
+$IO::Storm::Tuple::VERSION = '0.13';
 # Imports
 use strict;
 use warnings;
@@ -44,7 +44,7 @@ IO::Storm::Tuple - Storm's primitive data type passed around via streams.
 
 =head1 VERSION
 
-version 0.12
+version 0.13
 
 =head1 NAME
 
