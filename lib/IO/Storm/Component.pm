@@ -1,7 +1,7 @@
 # ABSTRACT: The base class for Bolts and Spouts.
 
 package IO::Storm::Component;
-$IO::Storm::Component::VERSION = '0.13';
+$IO::Storm::Component::VERSION = '0.14';
 # Imports
 use strict;
 use warnings;
@@ -12,6 +12,9 @@ use Log::Log4perl qw(:easy);
 use JSON::XS;
 use Data::Dumper;
 use IO::Storm::Tuple;
+
+# Setup STDIN/STDOUT/STDERR to use UTF8
+use open qw/:std :utf8/;
 
 # Setup Moo for object-oriented niceties
 use Moo;
@@ -258,7 +261,7 @@ IO::Storm::Component - The base class for Bolts and Spouts.
 
 =head1 VERSION
 
-version 0.13
+version 0.14
 
 =head1 METHODS
 

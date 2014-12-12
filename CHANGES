@@ -1,9 +1,79 @@
 ==================================================
-Changes from 2013-08-13 00:00:00 +0000 to present.
+Changes from 2013-12-12 00:00:00 +0000 to present.
 ==================================================
 
 -----------------------------------------
-version 0.13 at 2014-08-13 02:23:37 +0000
+version 0.14 at 2014-12-12 16:33:31 +0000
+-----------------------------------------
+
+  Change: e53022157e7fc92b2f38e12d3328d8afd804110c
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-12-12 10:46:56 +0000
+
+    Bump version to 0.14 
+
+  Change: ea61f60ca73b58fa5a2661089c6099993e23241e
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-12-12 10:45:24 +0000
+
+    IO::Storm now uses UTF-8 encoding for all communication with Storm.
+
+    It should have been this way all along. 
+
+  Change: 2cd2934bd56842635308d57fcbe78a4c46505f55
+  Author: Dan Blanchard <dan.blanchard@gmail.com>
+  Date : 2014-12-04 11:55:53 +0000
+
+    Merge pull request #2 from dapuck/master
+
+    Auto anchor inserts entire tuples instead of just the ids 
+
+  Change: 7d49adace5788faea700f3de6d444b28b16b509d
+  Author: Ian McCall <imccall@where2getit.com>
+  Date : 2014-12-04 09:58:55 +0000
+
+    Merge remote-tracking branch 'upstream/master'
+
+    Merging in travis file from parent repo. 
+
+  Change: e6eff8ee9f73d4e43e2f7b0fdf5fb5c814cbee3d
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-12-04 10:35:39 +0000
+
+    Add .travis.yml for automated CI 
+
+  Change: 0c994e40bdb28eb528742799339b19589ab03519
+  Author: Ian McCall <imccall@where2getit.com>
+  Date : 2014-12-03 16:02:51 +0000
+
+    Fixed use of tab instead of spaces. 
+
+  Change: 1cda57e8ae4472e7318cbd1b8a794dac57d78d3f
+  Author: Ian McCall <imccall@where2getit.com>
+  Date : 2014-12-03 15:49:22 +0000
+
+    Fixes auto anchoring. Refactor emit.
+
+    When using auto_anchor the entire tuple gets added to the anchor
+    array instead of just the id. This change fixes that, and makes it so
+    that the anchors arg will override auto_anchor. Also refactored the
+    code to reflect that args will be defined, even if the user doesn't
+    supply it. 
+
+  Change: 2d5fe541d99d98e87d2b8e2f8442ba5d416bfa06
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-08-12 22:27:27 +0000
+
+    Merge branch 'master' of github.com:dan-blanchard/io-storm 
+
+  Change: c06fb9790ff218bc950122719c710ea49df653a7
+  Author: Dan Blanchard <dan.blanchard@gmail.com>
+  Date : 2014-08-12 13:51:08 +0000
+
+    Fix typo in README from running markdown2pod 
+
+-----------------------------------------
+version 0.13 at 2014-08-13 02:23:24 +0000
 -----------------------------------------
 
   Change: c5964b0ba703ed5c0a6f1e9909b2ade2b03884d3
@@ -245,5 +315,5 @@ version 0.03 at 2014-07-25 18:32:15 +0000
     Ported Bolt/BasicBolt and Spout over from Python Streamparse. 
 
 ===============================================
-Plus 1 release after 2013-08-13 00:00:00 +0000.
+Plus 1 release after 2013-12-12 00:00:00 +0000.
 ===============================================

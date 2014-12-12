@@ -1,7 +1,7 @@
 # ABSTRACT: The base class for all IO::Storm Bolts.
 
 package IO::Storm::Bolt;
-$IO::Storm::Bolt::VERSION = '0.13';
+$IO::Storm::Bolt::VERSION = '0.14';
 # Imports
 use strict;
 use warnings;
@@ -11,6 +11,7 @@ use Try::Tiny;
 # Setup Moo for object-oriented niceties
 use Moo;
 use namespace::clean;
+
 
 extends 'IO::Storm::Component';
 
@@ -59,38 +60,31 @@ sub process {
 sub emit ($$;$) {
     my ( $self, $tuple, $args ) = @_;
 
+    $args = $args // {};
     my $msg = { command => 'emit', tuple => $tuple };
 
-    my $anchors;
+    my $anchors = [];
     if ( $self->auto_anchor ) {
-        $anchors = $self->_current_tups;
+        $anchors = $self->_current_tups // [];
     }
-    else {
-        $anchors = [];
+    unless ( defined( $args->{anchors} ) ) {
+    	$args->{anchors} = $anchors;
     }
 
-    if ( defined($args) ) {
-
-        # Add anchors to message if specified
-        if ( defined( $args->{anchors} ) )
-        {
-            my $a;
-            for $a ( @{ $args->{anchors} } ) {
-                if ( ref($a) eq "IO::Storm::Tuple" ) {
-                    $a = $a->id;
-                }
-                push( @$anchors, $a );
-            }
+    my $a;
+    for $a ( @{ $args->{anchors} } ) {
+        if ( ref($a) eq "IO::Storm::Tuple" ) {
+            $a = $a->id;
         }
+        push( @$anchors, $a );
+    }
 
-        if ( defined( $args->{stream} ) ) {
-            $msg->{stream} = $args->{stream};
-        }
+    if ( defined( $args->{stream} ) ) {
+        $msg->{stream} = $args->{stream};
+    }
 
-        if ( defined( $args->{direct_task} ) ) {
-            $msg->{task} = $args->{direct_task};
-        }
-
+    if ( defined( $args->{direct_task} ) ) {
+        $msg->{task} = $args->{direct_task};
     }
 
     $msg->{anchors} = $anchors;
@@ -180,7 +174,7 @@ IO::Storm::Bolt - The base class for all IO::Storm Bolts.
 
 =head1 VERSION
 
-version 0.13
+version 0.14
 
 =head1 NAME
 
