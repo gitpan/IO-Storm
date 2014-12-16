@@ -4,7 +4,7 @@ use warnings;
 
 package IO::Storm;
 # ABSTRACT: IO::Storm allows you to write Bolts and Spouts for Storm in Perl.
-$IO::Storm::VERSION = '0.14';
+$IO::Storm::VERSION = '0.15';
 1;
 
 __END__
@@ -17,7 +17,7 @@ IO::Storm - IO::Storm allows you to write Bolts and Spouts for Storm in Perl.
 
 =head1 VERSION
 
-version 0.14
+version 0.15
 
 =head1 SYNOPSIS
 

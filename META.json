@@ -5,13 +5,13 @@
       "Cory G Watson <gphat@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.027, CPAN::Meta::Converter version 2.143240",
+   "generated_by" : "Dist::Zilla version 5.029, CPAN::Meta::Converter version 2.143240",
    "license" : [
       "perl_5"
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
-      "version" : "2"
+      "version" : 2
    },
    "name" : "IO-Storm",
    "prereqs" : {
@@ -30,7 +30,6 @@
             "Moo" : "0",
             "Try::Tiny" : "0",
             "namespace::clean" : "0",
-            "open" : "0",
             "perl" : "5.010",
             "strict" : "0",
             "warnings" : "0"
@@ -56,6 +55,6 @@
          "web" : "https://github.com/dan-blanchard/io-storm"
       }
    },
-   "version" : "0.14"
+   "version" : "0.15"
 }
 

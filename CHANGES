@@ -1,9 +1,25 @@
 ==================================================
-Changes from 2013-12-12 00:00:00 +0000 to present.
+Changes from 2013-12-16 00:00:00 +0000 to present.
 ==================================================
 
 -----------------------------------------
-version 0.14 at 2014-12-12 16:33:31 +0000
+version 0.15 at 2014-12-16 02:59:36 +0000
+-----------------------------------------
+
+  Change: 6c58d4674f7a92e472a0b1a61f5615ebd06c5dd9
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-12-15 14:50:03 +0000
+
+    Bump version to 0.15 
+
+  Change: 8fd8fd0e6e28d587ac679f48d52a4e1604065978
+  Author: Daniel Blanchard <dblanchard@ets.org>
+  Date : 2014-12-15 14:49:55 +0000
+
+    Switch to binmode from open pragma. Should fix UTF-8 issues. 
+
+-----------------------------------------
+version 0.14 at 2014-12-12 15:46:56 +0000
 -----------------------------------------
 
   Change: e53022157e7fc92b2f38e12d3328d8afd804110c
@@ -315,5 +331,5 @@ version 0.03 at 2014-07-25 18:32:15 +0000
     Ported Bolt/BasicBolt and Spout over from Python Streamparse. 
 
 ===============================================
-Plus 1 release after 2013-12-12 00:00:00 +0000.
+Plus 1 release after 2013-12-16 00:00:00 +0000.
 ===============================================
